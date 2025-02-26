@@ -12,7 +12,7 @@
     let loader = new THREE.GLTFLoader();
     let bodyModel;
 
-    loader.load('model.glb', function (gltf) {
+    loader.load('assets/model.glb', function (gltf) {
         bodyModel = gltf.scene;
         bodyModel.scale.set(1, 1, 1);
         scene.add(bodyModel);
@@ -20,13 +20,13 @@
         console.error('Error loading 3D model:', error);
     });
 
-    camera.position.z = 2;
+    camera.position.z = 5;
 
     function animate() {
-        requestAnimationFrame(animate);
-        if (bodyModel) bodyModel.rotation.y += 0.01;
-        renderer.render(scene, camera);
-    }
+    requestAnimationFrame(animate);
+    if (bodyModel) bodyModel.rotation.y += 0.01; // Only rotate if the model is loaded
+    renderer.render(scene, camera);
+}
     animate();
 
     function updateModel() {
