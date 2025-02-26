@@ -1,1 +1,46 @@
+import { useState } from "react";
+import { Canvas } from "@react-three/fiber";
+import { OrbitControls } from "@react-three/drei";
 
+export default function BodyModel() {
+  const [height, setHeight] = useState(170);
+  const [weight, setWeight] = useState(70);
+  const [bodyScale, setBodyScale] = useState([1, 1, 1]);
+
+  const updateModel = () => {
+    // Simple logic to scale body based on height & weight
+    const scaleFactor = 1 + (weight - 70) / 100;
+    setBodyScale([scaleFactor, scaleFactor, scaleFactor]);
+  };
+
+  return (
+    <div className="flex flex-col items-center gap-4 p-4">
+      <h1 className="text-xl font-bold">AI Body Model Prototype</h1>
+      <div className="flex gap-4">
+        <input
+          type="number"
+          value={height}
+          onChange={(e) => setHeight(e.target.value)}
+          placeholder="Height (cm)"
+          className="border p-2 rounded"
+        />
+        <input
+          type="number"
+          value={weight}
+          onChange={(e) => setWeight(e.target.value)}
+          placeholder="Weight (kg)"
+          className="border p-2 rounded"
+        />
+        <button onClick={updateModel} className="bg-blue-500 text-white px-4 py-2 rounded">Update Model</button>
+      </div>
+      <Canvas className="w-full h-96">
+        <ambientLight intensity={0.5} />
+        <OrbitControls />
+        <mesh scale={bodyScale}>
+          <sphereGeometry args={[1, 32, 32]} />
+          <meshStandardMaterial color="lightblue" />
+        </mesh>
+      </Canvas>
+    </div>
+  );
+}
